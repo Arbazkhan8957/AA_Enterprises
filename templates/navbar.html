@@ -26,28 +26,31 @@
 
         {% if request.user.is_authenticated %}
         <!-- Profile dropdown -->
-        <div class="relative group">
-          <button class="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
-            <img src="{% if request.user.profile.image %}{{ request.user.profile.image.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile" class="h-9 w-9 rounded-full object-cover border border-gray-300" />
+        <div x-data="{ open: false }" class="relative">
+          <!-- Button -->
+          <button @click="open = !open" class="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+            <img src="{% if request.user.profile.image %}{{ request.user.profile.image.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" 
+                alt="Profile" class="h-9 w-9 rounded-full object-cover border border-gray-300" />
             <span class="font-medium">{{ request.user.username }}</span>
-            <svg class="w-4 h-4 ml-1 text-gray-600 group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg :class="{ 'rotate-180': open }" class="w-4 h-4 ml-1 text-gray-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <div class="absolute left-0 z-10 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg hidden group-hover:block transition duration-300 ease-in-out">
-            <a href="{% url 'profile' %}" 
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:underline underline-offset-4 hover:text-base transition duration-200 ease-in-out">
+
+          <!-- Dropdown -->
+          <div x-show="open" @click.away="open = false" 
+              class="absolute left-0 z-10 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg transition duration-300 ease-in-out">
+            <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:underline underline-offset-4 transition duration-200">
               Update Profile
             </a>
-            <a href="{% url 'password_change' %}" 
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:underline underline-offset-4 hover:text-base transition duration-200 ease-in-out">
+            <a href="{% url 'password_change' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:underline underline-offset-4 transition duration-200">
               Change Password
             </a>
-            <a href="{% url 'logout' %}" 
-              class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:underline underline-offset-4 hover:text-base transition duration-200 ease-in-out">
+            <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:underline underline-offset-4 transition duration-200">
               Logout
             </a>
           </div>
+        </div>
 
         </div>
         {% else %}
