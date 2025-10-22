@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!-- Google Fonts & Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-100 py-20 relative overflow-hidden">
+
+  <!-- Decorative Background -->
+  <div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-200 rounded-full blur-3xl opacity-40"></div>
+  <div class="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-indigo-300 rounded-full blur-3xl opacity-40"></div>
+
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="absolute top-20 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-xl px-6 space-y-3">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl text-white
+                      transition-all duration-500 ease-in-out transform hover:scale-105 cursor-pointer
+                      {% if message.tags == 'success' %} bg-gradient-to-r from-green-500 via-emerald-500 to-green-600
+                      {% elif message.tags == 'error' %} bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+                      {% else %} bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600
+                      {% endif %}" 
+               onclick="dismissToast()">
+            <i class="fa-solid {% if message.tags == 'success' %}fa-circle-check{% elif message.tags == 'error' %}fa-circle-xmark{% else %}fa-circle-info{% endif %}"></i>
+            <p class="font-medium text-base">{{ message }}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Map -->
+    <div class="w-full h-64 md:h-96 mb-12 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-indigo-100 animate-scale-in">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.946492168921!2d72.87765541540238!3d19.07598338709164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6304b3a2a85%3A0x3b8f7a5b3d6b0f88!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1670000000000!5m2!1sen!2sin"
+        width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <!-- Header -->
+    <div class="text-center mb-14 animate-fade-down">
+      <h2 class="text-5xl font-extrabold bg-gradient-to-r from-indigo-700 via-purple-700 to-indigo-800 bg-clip-text text-transparent drop-shadow-md">
+        <i class="fa-solid fa-envelope-open-text mr-3"></i>Contact Us
+      </h2>
+      <p class="text-gray-600 text-lg mt-3">We’d love to hear from you! Send us a message and we’ll get back shortly.</p>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="backdrop-blur-xl bg-white/80 border border-indigo-100 rounded-3xl shadow-[0_8px_40px_rgba(0,0,0,0.08)] overflow-hidden transition-transform duration-500 hover:shadow-[0_10px_50px_rgba(0,0,0,0.12)] animate-scale-in">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+
+        <!-- Left Info -->
+        <div class="bg-gradient-to-br from-indigo-700 via-indigo-600 to-indigo-800 text-white p-10 md:p-12 flex flex-col justify-between animate-slide-left">
+          <div>
+            <h3 class="text-3xl font-semibold mb-6 tracking-tight"><i class="fa-solid fa-address-book mr-2"></i>Other Contact Options</h3>
+            <div class="space-y-5 text-indigo-100">
+              <p><i class="fa-solid fa-phone mr-2"></i><span class="font-medium">Phone:</span><br>
+                <a href="tel:+91-9819495892" class="hover:underline hover:text-indigo-200 block mt-1"><i class="fa-solid fa-mobile-screen-button mr-1"></i>+91-9819495892</a>
+                <a href="tel:+91-9326183962" class="hover:underline hover:text-indigo-200 block"><i class="fa-solid fa-mobile-screen-button mr-1"></i>+91-9326183962</a>
+              </p>
+              <p><i class="fa-solid fa-envelope mr-2"></i><span class="font-medium">Email:</span><br>
+                <a href="mailto:aaenterprises@email.com" class="hover:underline hover:text-indigo-200 block mt-1"><i class="fa-solid fa-paper-plane mr-1"></i>aaenterprises123786@gmail.com</a>
+              </p>
+              <p><i class="fa-solid fa-location-dot mr-2"></i><span class="font-medium">Address:</span><br>
+                <i class="fa-solid fa-shop mr-1"></i>Shop #45, Chikhal House Kalbadevi Road, <br />Mumbai - 400002, Maharashtra, India.
+              </p>
+            </div>
+          </div>
+          <div class="mt-8 text-sm text-indigo-200 border-t border-indigo-500/40 pt-4 flex items-center gap-2">
+            <i class="fa-solid fa-clock"></i>
+            <p>We aim to respond within 1 business day. Thank you for contacting <span class="text-white font-semibold">A A Enterprises</span>.</p>
+          </div>
+        </div>
+
+        <!-- Right Form -->
+        <div class="p-8 lg:p-12 animate-slide-right">
+          <form method="POST" id="contactForm" class="space-y-6">
+            {% csrf_token %}
+            
+            {% for field in form %}
+              <div class="relative group opacity-0 translate-y-4 transition-all duration-700 ease-out form-field">
+
+                <label for="{{ field.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2 tracking-wide flex items-center gap-2">
+                  <i class="
+                    {% if field.name == 'name' %}fa-solid fa-user
+                    {% elif field.name == 'email' %}fa-solid fa-envelope
+                    {% elif field.name == 'phone' %}fa-solid fa-phone
+                    {% elif field.name == 'message' %}fa-solid fa-message
+                    {% else %}fa-solid fa-circle-user
+                    {% endif %} text-indigo-600
+                  "></i>
+                  {{ field.label }}
+                </label>
+
+                {{ field|add_class:"w-full border border-gray-300 bg-white/70 backdrop-blur-sm rounded-lg px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400 shadow-sm transition-all duration-300" }}
+                
+                {% if field.errors %}
+                  <p class="text-red-600 text-sm mt-1 flex items-center gap-1">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    {{ field.errors.as_text|striptags }}
+                  </p>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <!-- Submit -->
+            <div class="opacity-0 translate-y-4 transition-all duration-700 ease-out form-field">
+              <button type="submit" id="submitBtn" class="w-full inline-flex justify-center items-center gap-3
+                      bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white text-lg font-semibold rounded-xl px-6 py-3 shadow-lg
+                      transform transition-all duration-300 hover:scale-[1.03] hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span id="btnText">Send Enquiry</span>
+              </button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+  function dismissToast() {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.classList.add('opacity-0', 'translate-y-3', 'transition', 'duration-500');
+    setTimeout(() => toast.remove(), 600);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+    const btnText = document.getElementById('btnText');
+
+    form.addEventListener('submit', () => {
+      btnText.textContent = 'Sending...';
+    });
+
+    const fields = document.querySelectorAll(".form-field");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("opacity-0", "translate-y-4");
+          entry.target.classList.add("opacity-100", "translate-y-0");
+        }
+      });
+    }, { threshold: 0.1 });
+    fields.forEach(field => observer.observe(field));
+
+    // Auto-dismiss toast after 4 seconds
+    const toast = document.getElementById('toast');
+    if (toast) setTimeout(dismissToast, 4000);
+  });
+</script>
+
+<!-- Tailwind Animations & Styling -->
+<style>
+  @layer utilities {
+    .animate-page-fade-in { animation: fadeIn 0.8s ease-out; }
+    .animate-fade-down { animation: fadeDown 0.7s ease-out; }
+    .animate-scale-in { animation: scaleIn 0.6s ease-out; }
+    .animate-slide-left { animation: slideLeft 0.6s ease-out; }
+    .animate-slide-right { animation: slideRight 0.6s ease-out; }
+    .animate-slide-down { animation: slideDown 0.5s ease-out; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    @keyframes slideLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+  }
+</style>
+{% endblock %}

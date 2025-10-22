@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Font & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<section class="relative bg-gradient-to-b from-slate-100 via-white to-slate-100 py-20 sm:py-24 px-4 sm:px-8 lg:px-12 overflow-hidden font-[Poppins]">
+
+  <!-- Decorative Animated Blobs -->
+  <div class="absolute top-20 left-0 w-52 sm:w-72 h-52 sm:h-72 bg-indigo-400 rounded-full opacity-30 blur-3xl animate-pulse-slow -z-10"></div>
+  <div class="absolute bottom-0 right-0 w-56 sm:w-80 h-56 sm:h-80 bg-purple-400 rounded-full opacity-30 blur-3xl animate-pulse-slow -z-10"></div>
+
+  <!-- Container -->
+  <div class="relative z-10 max-w-7xl mx-auto text-center space-y-16 sm:space-y-20">
+
+    <!-- Section Header -->
+    <div class="px-4">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-indigo-700 mb-6 animate-fade-down flex justify-center items-center gap-3 flex-wrap leading-tight">
+        <i class="fa-solid fa-industry text-purple-500 text-2xl sm:text-3xl"></i>
+        About <span class="text-purple-600">A A Enterprises</span>
+      </h2>
+      <p class="text-gray-700 text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed animate-fade-in">
+        Your trusted partner in <span class="font-semibold text-indigo-600">electrical</span>,
+        <span class="font-semibold text-indigo-600">switchgear</span>, and
+        <span class="font-semibold text-indigo-600">industrial automation</span> — delivering quality for over a decade.
+      </p>
+    </div>
+
+    <!-- About Info Card -->
+    <div class="bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-6 sm:p-10 md:p-12 mx-auto transition duration-500 hover:shadow-2xl hover:scale-[1.01] border border-indigo-50 max-w-6xl">
+
+      <!-- About Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center about-block opacity-0 translate-y-5 transition-all duration-700 ease-out">
+        <div class="space-y-5 sm:space-y-6 text-left">
+          <p class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed">
+            <strong class="text-gray-900">A A Enterprises</strong> is a trusted supplier of
+            <strong class="text-gray-900">electrical, switchgear, and industrial automation components</strong>.
+            With over <strong class="text-indigo-600">10 years of expertise</strong>, we focus on reliability,
+            innovation, and unmatched service quality.
+          </p>
+          <p class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed">
+            Our inventory includes <strong>MCB, MCCB, Contactors, Indicators, Relays,
+            Panel Accessories, Timers, Power Supplies</strong> and more.
+            We proudly distribute brands like 
+            <strong class="text-indigo-600">Siemens, Schneider, L&T, GE, C&S, and EPCOS</strong>.
+          </p>
+        </div>
+        <div class="relative group flex justify-center">
+          <img src="{% static 'images/about_Img.png' %}" alt="About A A Enterprises"
+               class="rounded-2xl shadow-lg border border-gray-200 transition-transform duration-700 hover:scale-105 hover:shadow-indigo-200/70 object-cover h-60 sm:h-72 md:h-80 w-full sm:w-[400px] md:w-[420px]"
+               loading="lazy" decoding="async"
+               onerror="this.src='{% static 'images/placeholder-about.jpg' %}'">
+          <div class="absolute inset-0 bg-gradient-to-t from-indigo-600/20 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
+        </div>
+      </div>
+
+      <!-- Our Vision -->
+      <div class="mt-12 sm:mt-16 opacity-0 translate-y-5 transition-all duration-700 ease-out about-block text-left sm:text-center">
+        <h3 class="text-xl sm:text-2xl font-semibold text-indigo-600 mb-3 flex justify-center items-center flex-wrap gap-2">
+          <i class="fa-solid fa-eye text-purple-500"></i> Our Vision
+        </h3>
+        <p class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
+          To be the most reliable partner in <strong>industrial electrical solutions</strong> —
+          delivering excellence through high-quality products, innovation, and customer-centric service.
+        </p>
+      </div>
+
+      <!-- Why Choose Us -->
+      <div class="mt-12 sm:mt-16 opacity-0 translate-y-5 transition-all duration-700 ease-out about-block text-left sm:text-center">
+        <h3 class="text-xl sm:text-2xl font-semibold text-indigo-600 mb-4 flex justify-center items-center flex-wrap gap-2">
+          <i class="fa-solid fa-handshake text-purple-500"></i> Why Choose Us
+        </h3>
+        <ul class="list-none space-y-3 text-gray-700 text-sm sm:text-base md:text-lg max-w-3xl mx-auto">
+          <li class="flex justify-center items-center"><i class="fa-solid fa-check text-indigo-500 mr-3"></i> Authorized distributor of leading companies</li>
+          <li class="flex justify-center items-center"><i class="fa-solid fa-check text-indigo-500 mr-3"></i> Extensive product portfolio in automation</li>
+          <li class="flex justify-center items-center"><i class="fa-solid fa-check text-indigo-500 mr-3"></i> Quick sourcing and reliable customer support</li>
+          <li class="flex justify-center items-center"><i class="fa-solid fa-check text-indigo-500 mr-3"></i> Competitive pricing & after-sales excellence</li>
+        </ul>
+      </div>
+
+      <!-- Contact & Location -->
+      <div class="mt-12 sm:mt-16 opacity-0 translate-y-5 transition-all duration-700 ease-out about-block text-left sm:text-center">
+        <h3 class="text-xl sm:text-2xl font-semibold text-indigo-600 mb-4 flex justify-center items-center flex-wrap gap-2">
+          <i class="fa-solid fa-location-dot text-purple-500"></i> Contact & Location
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700 text-sm sm:text-base md:text-lg max-w-4xl mx-auto">
+          <div class="space-y-2">
+            <p>
+              <strong class="block text-gray-900"><i class="fa-solid fa-phone text-indigo-500 mr-2"></i> Phone:</strong>
+              <a href="tel:+91-9819495892" class="text-indigo-600 hover:underline block">+91-9819495892</a>
+              <a href="tel:+91-9326183962" class="text-indigo-600 hover:underline block">+91-9326183962</a>
+            </p>
+            <p>
+              <strong class="block text-gray-900"><i class="fa-solid fa-envelope text-indigo-500 mr-2"></i> Email:</strong>
+              <a href="mailto:aaenterprises123786@gmail.com" class="text-indigo-600 hover:underline block">
+                aaenterprises123786@gmail.com
+              </a>
+            </p>
+          </div>
+          <div>
+            <p>
+              <strong class="block text-gray-900"><i class="fa-solid fa-map-marker-alt text-indigo-500 mr-2"></i> Address:</strong>
+              Shop #45, Chikhal House Kalbadevi Road,<br/>
+              Mumbai - 400002, Maharashtra,<br/>
+              India.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scroll Animations -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const blocks = document.querySelectorAll(".about-block");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove("opacity-0", "translate-y-5");
+        entry.target.classList.add("opacity-100", "translate-y-0");
+      }
+    });
+  }, { threshold: 0.1 });
+  blocks.forEach(block => observer.observe(block));
+});
+</script>
+
+<!-- Custom Animations -->
+<style>
+  @layer utilities {
+    .animate-fade-down {
+      animation: fadeDown 0.8s ease-out both;
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.9s ease-out both;
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseSlow {
+      0%, 100% { opacity: 0.25; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.05); }
+    }
+    .animate-pulse-slow {
+      animation: pulseSlow 6s ease-in-out infinite;
+    }
+  }
+</style>
+{% endblock %}

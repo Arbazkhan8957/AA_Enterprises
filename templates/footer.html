@@ -1,0 +1,114 @@
+{% load static %}
+
+<footer class="bg-gray-900 text-gray-200 relative overflow-hidden">
+  <!-- Animated Background -->
+  <div class="absolute inset-0 bg-gradient-to-r from-indigo-800 via-gray-900 to-indigo-800 opacity-60 animate-footer-gradient"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-12 py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 z-10">
+    
+    <!-- Brand -->
+    <div class="space-y-3 footer-item opacity-0 translate-y-3">
+      <div class="flex items-center space-x-3">
+        <img src="{% static 'images/logo_AA.png' %}" alt="A A Enterprises" class="rounded-full h-12 w-12 object-cover border-2 border-indigo-500 shadow-md">
+        <h1 class="text-2xl font-extrabold tracking-wide bg-gradient-to-r from-indigo-400 to-indigo-200 bg-clip-text text-transparent">AA ENTERPRISES</h1>
+      </div>
+      <p class="text-sm text-gray-300 leading-relaxed">
+        Your trusted partner in electrical, switchgear, and industrial automation solutions.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="space-y-4 footer-item opacity-0 translate-y-3 delay-100">
+      <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+        <i class="fa-solid fa-link text-indigo-400"></i> Quick Links
+      </h4>
+      <ul class="space-y-2">
+        <li><a href="/" class="hover:text-indigo-400 transition">Home</a></li>
+        <li><a href="/about/" class="hover:text-indigo-400 transition">About</a></li>
+        <li><a href="/products/" class="hover:text-indigo-400 transition">Products</a></li>
+        <li><a href="/brands/" class="hover:text-indigo-400 transition">Brands</a></li>
+        <li><a href="/contact/" class="hover:text-indigo-400 transition">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="space-y-4 footer-item opacity-0 translate-y-3 delay-200">
+      <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+        <i class="fa-solid fa-phone text-indigo-400"></i> Contact
+      </h4>
+      <div class="text-sm text-gray-300 space-y-2">
+        <p><i class="fa-solid fa-mobile-screen-button mr-2 text-indigo-400"></i>
+          <a href="tel:+919819495892" class="hover:text-indigo-400">+91 9819495892</a>
+        </p>
+        <p><i class="fa-solid fa-phone mr-2 text-indigo-400"></i>
+          <a href="tel:+919326183962" class="hover:text-indigo-400">+91 9326183962</a>
+        </p>
+        <p><i class="fa-solid fa-envelope mr-2 text-indigo-400"></i>
+          <a href="mailto:aaenterprises@email.com" class="hover:text-indigo-400">
+            aaenterprises@gmail.com
+          </a>
+        </p>
+        <p><i class="fa-solid fa-location-dot mr-2 text-indigo-400"></i>
+          Shop #45, Chikhal House Kalbadevi Road,
+              Mumbai - 400002, Maharashtra,<br/>
+              India.
+        </p>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="space-y-4 footer-item opacity-0 translate-y-3 delay-300">
+      <h4 class="text-lg font-semibold text-white flex items-center gap-2">
+        <i class="fa-solid fa-paper-plane text-indigo-400"></i> Newsletter
+      </h4>
+      <form method="POST" action="#" class="flex flex-col sm:flex-row gap-2">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Your email" required
+               class="flex-1 px-4 py-2 rounded-lg sm:rounded-l-lg border-none focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900">
+        <button type="submit"
+                class="bg-indigo-600 px-4 py-2 rounded-lg sm:rounded-r-lg text-white hover:bg-indigo-700 transition duration-300">
+          Subscribe
+        </button>
+      </form>
+
+      <div class="flex space-x-4 mt-4">
+        <a href="#" class="hover:text-indigo-400 transition transform hover:scale-110"><i class="fab fa-facebook-f text-lg"></i></a>
+        <a href="#" class="hover:text-indigo-400 transition transform hover:scale-110"><i class="fab fa-linkedin-in text-lg"></i></a>
+        <a href="#" class="hover:text-indigo-400 transition transform hover:scale-110"><i class="fab fa-whatsapp text-lg"></i></a>
+        <a href="#" class="hover:text-indigo-400 transition transform hover:scale-110"><i class="fab fa-instagram text-lg"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="relative border-t border-gray-700 text-center py-4 text-sm footer-item opacity-0 translate-y-3 delay-400">
+    &copy; 2025 <span class="font-semibold text-indigo-400">A A Enterprises</span>. All rights reserved. Made by<span class="text-red-400"> Arbaz Khan</span>
+  </div>
+</footer>
+
+<!-- Footer Animation Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll(".footer-item");
+    items.forEach((item, idx) => {
+      setTimeout(() => {
+        item.classList.remove("opacity-0", "translate-y-3");
+        item.classList.add("opacity-100", "translate-y-0", "transition-all", "duration-700");
+      }, idx * 200);
+    });
+  });
+</script>
+
+<!-- Tailwind Keyframes for Gradient -->
+<style>
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-footer-gradient {
+    background-size: 200% 200%;
+    animation: gradientMove 10s ease infinite;
+  }
+</style>

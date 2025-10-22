@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-50">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}A A Enterprises{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Tailwind CDN (ensure this loads first) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Alpine.js (for dropdowns etc.) -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <!-- Your static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+  <!-- Favicon (optional) -->
+  <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+</head>
+
+<body class="min-h-screen flex flex-col font-sans text-gray-800 bg-gray-50">
+
+  <!-- Navbar -->
+  {% include 'navbar.html' %}
+  
+
+  <!-- Page Content -->
+  <main class="flex-grow container mx-auto px-4 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+</body>
+</html>

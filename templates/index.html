@@ -1,0 +1,865 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Google Fonts & Font Awesome (in your base.html ideally) -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="max-w-7xl mx-auto px-4 py-12 font-['Roboto']">
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-indigo-50 via-white to-indigo-100 overflow-hidden">
+    <div class="text-center py-20 px-6 animate-hero">
+      <!-- Animated Icon Header -->
+      <div class="flex justify-center mb-6">
+        <div class="bg-indigo-100 p-5 rounded-full shadow-lg animate-bounce">
+          <i class="fa-solid fa-bolt text-indigo-600 text-3xl"></i>
+        </div>
+      </div>
+
+      <!-- Hero Title -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-indigo-700 mb-4 tracking-wide drop-shadow-sm">
+        Welcome to <span class="text-indigo-500">A A Enterprises</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+        <i class="fa-solid fa-plug-circle-bolt text-indigo-500 mr-2"></i>
+        Your Trusted Partner in <span class="font-medium text-indigo-600">Electrical</span> &amp; 
+        <span class="font-medium text-indigo-600">Switchgear Automation</span>
+      </p>
+
+      <!-- Hero Image -->
+      <div class="mt-10 relative group">
+        <img src="{% static 'images/light_switch.jpg' %}" 
+            alt="Company Banner"
+            class="w-full max-w-5xl mx-auto rounded-3xl shadow-2xl border border-gray-200 object-cover max-h-[500px] transform transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-indigo-300/60 animate-hero-img"
+            loading="lazy"
+            decoding="async">
+        <!-- Overlay Glow -->
+        <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-indigo-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Brands Section -->
+  <section class="mb-24">
+    <h3 class="text-center text-3xl font-bold text-gray-800 mb-12 mt-12 animate-fade-in tracking-wide">
+      Top Companies We Deal In <i class="fa-solid fa-star text-indigo-500"></i>
+    </h3>
+
+    {% if brands_top %}
+      <div id="brandsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
+        {% for brand in brands_top %}
+          <!-- Brand Card -->
+          <a href="{% if brand.get_absolute_url %}{{ brand.get_absolute_url }}{% else %}#{% endif %}" class="group w-full">
+            <div class="brand-card relative group p-4 bg-white rounded-2xl shadow-xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] flex flex-col items-center text-center cursor-pointer opacity-0 scale-90 animate-brand"
+                style="animation-delay: {{ forloop.counter0|add:"0.1"|floatformat:1 }}s">
+
+              <!-- Logo Wrapper -->
+              <div class="relative w-full h-44 sm:h-52 mb-4 rounded-xl overflow-hidden shadow-inner shadow-[0_10px_25px_rgba(0,0,0,0.1)] transition-all duration-500 transform group-hover:scale-105 group-hover:-translate-y-1">
+                {% if brand.logo %}
+                  <img src="{{ brand.logo.url }}"
+                      alt="{{ brand.name }} logo"
+                      class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125"
+                      onerror="this.src='{% static 'images/placeholder-logo.png' %}'">
+                {% else %}
+                  <img src="{% static 'images/placeholder-logo.png' %}"
+                      alt="{{ brand.name }} logo"
+                      class="w-full h-full object-contain">
+                {% endif %}
+
+                <!-- Hover Overlay / Bubble -->
+                <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300 shadow-lg">
+                  {{ brand.name }}
+                </span>
+              </div>
+
+              <!-- Brand Name -->
+              <h1 class="text-lg sm:text-xl font-semibold text-gray-900 tracking-wide hover:text-indigo-600 transition-colors flex items-center gap-2 justify-center">
+                {{ brand.name }} <i class="fa-solid fa-box-open"></i>
+              </h1>
+
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-gray-500 italic">No brands available yet.</p>
+    {% endif %}
+  </section>
+
+  <!-- Now Ready Stock Section -->
+  <section class="mb-24 px-4">
+    <h3 class="text-center text-3xl font-bold text-gray-800 mb-10 animate-fade-in tracking-wide">
+      Now Ready Stock <i class="fa-solid fa-bolt text-yellow-500"></i>
+    </h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+      <!-- Stock Item Template -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/4WAY_WATER_PROF_BOX.jpg' %}" alt="4WAY WATER PROF BOX" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">4WAY WATER PROF BOX</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">4WAY WATER PROF BOX <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- Repeat for each item -->
+
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/5PIN_L_TYPE_HEAVY_DUTY.jpg' %}" alt="5PIN L TYPE HEAVY DUTY" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">5PIN L TYPE HEAVY DUTY</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">5PIN L TYPE HEAVY DUTY <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/12VDC_SIREN.jpg' %}" alt="12V DC SIREN" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">12V DC SIREN</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">12V DC SIREN <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 4 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/16MM_LED_INDICATOR.jpg' %}" alt="16MM LED INDICATOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">16MM LED INDICATOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">16MM LED INDICATOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+      
+      <!-- 5 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/22.5MM_LED_BUZZER.jpg' %}" alt="22.5MM LED BUZZER" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">22.5MM LED BUZZER</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">22.5MM LED BUZZER <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 6 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/22.5MM_PVC_EMERGENCY_STOP.jpg' %}" alt="22.5MM PVC EMERGENCY STOP" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">22.5MM PVC EMERGENCY STOP</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">22.5MM PVC EMERGENCY STOP <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 7 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/1013_1012_TIRSHUEL.jpg' %}" alt="1013 1012 TIRSHUEL" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">1013 1012 TIRSHUEL</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">1013 1012 TIRSHUEL <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 8 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/8108_LIMIT_SWITCH.jpg' %}" alt="8108 LIMIT SWITCH" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">8108 LIMIT SWITCH</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">8108 LIMIT SWITCH <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 9 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/BOX_TYPE_SENSOR_PNP_NO.jpg' %}" alt="BOX TYPE SENSOR PNP NO" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">BOX TYPE SENSOR PNP NO</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">BOX TYPE SENSOR PNP NO <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 10 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/CHAKRA_TOOL.jpg' %}" alt="CHAKRA TOOL" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">CHAKRA TOOL</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">CHAKRA TOOL <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+      <!-- 11 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/DIGITAL_CLAMP_METER.jpg' %}" alt="DIGITAL CLAMP METER" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">DIGITAL CLAMP METER</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">DIGITAL CLAMP METER <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 12 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/FRONTIER_TIMER.jpg' %}" alt="FORNTIER TIMER" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">FORNTIER TIMER</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">FORNTIER TIMER <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 13 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/HT5_HT8_HT12_BOX.jpg' %}" alt="HT5 HT8 HT12 BOX" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">HT5 HT8 HT12 BOX</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">HT5 HT8 HT12 BOX <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 14 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MINI_RED_REVOLVING_LIGHT.jpg' %}" alt="MINI RED REVOLVING LIGHT" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MINI RED REVOLVING LIGHT</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MINI RED REVOLVING LIGHT <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 15 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MK2RELAY_BASE.jpg' %}" alt="MK2 RELAY BASE" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MK2 RELAY BASE</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MK2 RELAY BASE <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 16 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MK3_RELAY_BASE.jpg' %}" alt="MK3 RELAY BASE" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MK3 RELAY BASE</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MK3 RELAY BASE <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 17 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MOTION_SENSOR.jpg' %}" alt="MOTION SENSOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MOTION SENSOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MOTION SENSOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 18 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MS190_SIREN.jpg' %}" alt="MS190 SIREN" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MS190 SIREN</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MS190 SIREN <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 19 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MT_CABLE_DRUM_BLACK.jpg' %}" alt="MT CABLE DRUM BLACK" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MT CABLE DRUM</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MT CABLE DRUM <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 20 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MT_CABLE_DRUM_BLUE.jpg' %}" alt="MT CABLE DRUM BLUE" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MT CABLE DRUM</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MT CABLE DRUM <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+      <!-- 21 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MT_CABLE_DRUM_RED.jpg' %}" alt="MT CABLE DRUM RED" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MT CABLE DRUM</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MT CABLE DRUM <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 22 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MT_CABLE_DRUM_RED2.jpg' %}" alt="MT CABLE DRUM RED2" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MT CABLE DRUM</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MT CABLE DRUM <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 23 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MY4_RELAY_BASE.jpg' %}" alt="MY4 RELAY BASE" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MY4 RELAY BASE</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MY4 RELAY BASE <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 24 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/NC_ELEMENT.jpg' %}" alt="NC ELEMENT" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">NC ELEMENT</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">NC ELEMENT <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 25 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/NO_ELEMENT.jpg' %}" alt="NO ELEMENT" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">NO ELEMENT</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">NO ELEMENT <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 26 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/OIL_TIGHT_LIMIT_SWITCH.jpg' %}" alt="OIL TIGHT LIMIT SWITCH" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">OIL TIGHT LIMIT SWITCH</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">OIL TIGHT LIMIT SWITCH <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 27 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/RED_REVOLVING_LIGHT.jpg' %}" alt="RED REVOLVING LIGHT" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">RED REVOLVING LIGHT</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">RED REVOLVING LIGHT <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 28 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/SPEED_CONTROLLER.jpg' %}" alt="SPEED CONTROLLER" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">SPEED CONTROLLER</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">SPEED CONTROLLER <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 29 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/VOLTAGE_AND_AMP_PROTECTOR.jpg' %}" alt="VOLTAGE AND AMP PROTECTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">VOLTAGE AND AMP PROTECTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">VOLTAGE AND AMP PROTECTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 30 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/WLD2_LIMIT_SWITCH.jpg' %}" alt="WLD2 LIMIT SWITCH" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">WLD2 LIMIT SWITCH</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">WLD2 LIMIT SWITCH <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 31 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/XAC_EMERGENCY_STOP.jpg' %}" alt="XAC EMERGENCY STOP" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">XAC EMERGENCY STOP</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">XAC EMERGENCY STOP <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 32 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/YQK_300_CRIMPING_TOOLS.jpg' %}" alt="YQK 300 CRIMPING TOOLS" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">YQK 300 CRIMPING TOOLS</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">YQK 300 CRIMPING TOOLS <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 33 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/TOWER_LIGHT.jpg' %}" alt="TOWER LIGHT" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">TOWER LIGHT</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">TOWER LIGHT <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 34 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/SOLAR_REVOLVING.jpg' %}" alt="SOLAR REVOLVING" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">SOLAR REVOLVING</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">SOLAR REVOLVING <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 35 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LIMIT_SWITCH.png' %}" alt="LIMIT SWITCH" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LIMIT SWITCH</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LIMIT SWITCH <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 36 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LED_PANEL_INDICATOR.jpg' %}" alt="LED PANEL INDICATOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LED PANEL INDICATOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LED PANEL INDICATOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 37 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/INDUSTRIAL_PLUG.jpg' %}" alt="INDUSTRIAL PLUG" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">INDUSTRIAL PLUG</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">INDUSTRIAL PLUG <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 38 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/CRIMPING_TOOL.jpg' %}" alt="CRIMPING TOOL" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">CRIMPING TOOL</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">CRIMPING TOOL <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 39 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/12MM_PROXIMITY_SENSORS_DETECTION_SWITCH.jpg' %}" alt="12MM PROXIMITY SENSORS DETECTION SWITCH" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">12MM PROXIMITY SENSORS DETECTION SWITCH</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">12MM PROXIMITY SENSORS DETECTION SWITCH <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 40 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/SIEMENS_3TF46_CONTACTOR.jpg' %}" alt="SIEMENS 3TF46 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">SIEMENS 3TF46 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">SIEMENS 3TF46 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 41 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/SIEMENS_3TF32_CONTACTOR.jpg' %}" alt="SIEMENS 3TF32 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">SIEMENS 3TF32 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">SIEMENS 3TF32 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 42 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/SIEMENS_3TF30_CONTACTOR.jpg' %}" alt="SIEMENS 3TF30 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">SIEMENS 3TF30 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">SIEMENS 3TF30 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 43 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/RESONANCE_INDICATOR_PUSH_BUTTON.jpg' %}" alt="RESONANCE INDICATOR PUSH BUTTON" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">RESONANCE INDICATOR PUSH BUTTON</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">RESONANCE INDICATOR PUSH BUTTON <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 44 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/OMRON_WLCA12-Q.jpg' %}" alt="OMRON WLCA12-Q" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">OMRON WLCA12-Q</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">OMRON WLCA12-Q <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 45 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/MY2_220VAC_RELAY.png' %}" alt="MY2 220VAC RELAY" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">MY2 220VAC RELAY</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">MY2 220VAC RELAY <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 46 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LRD22_RELAY.jpg' %}" alt="LRD 22 RELAY" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LRD 22 RELAY</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LRD 22 RELAY <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 47 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LRD21_RELAY.jpg' %}" alt="LRD 21 RELAY" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LRD 21 RELAY</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LRD 21 RELAY <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 48 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LRD08_RELAY.jpg' %}" alt="LRD 08 RELAY" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LRD 08 RELAY</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LRD 08 RELAY <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 49 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1E2510_CONTACTOR.jpg' %}" alt="LC1E 2510 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1E 2510 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1E 2510 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 50 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1E1810_CONTACTOR.jpg' %}" alt="LC1E 1810 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1E 1810 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1E 1810 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 51 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1E1801_CONTACTOR.jpg' %}" alt="LC1E 1801 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1E 1801 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1E 1801 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 52 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1E80_CONTACTOR.jpg' %}" alt="LC1E 80 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1E 80 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1E 80 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 53 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1E50_CONTACTOR.jpg' %}" alt="LC1E 50 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1E 50 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1E 50 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 54 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1E09_CONTACTOR.jpg' %}" alt="LC1E 09 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1E 09 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1E 09 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 55 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1D80_CONTACTOR.jpg' %}" alt="LC1D 80 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1D 80 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1D 80 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 56 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1D32_CONTACTOR.jpg' %}" alt="LC1D 32 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1D 32 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1D 32 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 57 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1D18_CONTACTOR.jpg' %}" alt="LC1D 18 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1D 18 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1D 18 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 58 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LC1D09_CONTACTOR.jpg' %}" alt="LC1D 09 CONTACTOR" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LC1D 09 CONTACTOR</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LC1D 09 CONTACTOR <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 59 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/INDUSTRIAL_PLUG_AND_SOCKET.jpg' %}" alt="INDUSTRIAL PLUG AND SOCKET" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">INDUSTRIAL PLUG AND SOCKET</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">INDUSTRIAL PLUG AND SOCKET <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 60 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/ENERTECH_PG_11_CABLE_GLAND.jpg' %}" alt="ENERTECH PG 11 CABLE GLAND" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">ENERTECH PG 11 CABLE GLAND</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">ENERTECH PG 11 CABLE GLAND <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 61 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/ENERTECH_PG_9_CABLE_GLAND.jpg' %}" alt="ENERTECH PG 9 CABLE GLAND" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">ENERTECH PG 9 CABLE GLAND</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">ENERTECH PG 9 CABLE GLAND <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 62 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/16_AMPS_THREE_PIN_MULTI_PLUG _SOCKET.jpg' %}" alt="16 AMPS THREE PIN MULTI PLUG SOCKET" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">16 AMPS THREE PIN MULTI PLUG SOCKET</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">16 AMPS THREE PIN MULTI PLUG SOCKET <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+
+      <!-- 63 -->
+      <div class="stock-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col items-center text-center cursor-pointer">
+        <div class="relative w-full h-60 mb-4 shadow-xl rounded-xl overflow-hidden">
+          <img src="{% static 'images/LRD06_RELAY.jpg' %}" alt="LRD 06 RELAY" class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-75 group-hover:contrast-125">
+          <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300">LRD 06 RELAY</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-semibold text-black-600 tracking-wide">LRD 06 RELAY <i class="fa-solid fa-box-open"></i></h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="mb-12">
+    <h3 class="text-center text-3xl font-bold text-gray-800 mb-10 animate-fade-in tracking-wide">
+      Featured Products <i class="fa-solid fa-gem text-pink-500"></i>
+    </h3>
+
+    {% if products %}
+      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% for product in products %}
+          <div class="product-card relative group p-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 flex flex-col cursor-pointer">
+
+            <div class="relative w-full h-56 sm:h-64 md:h-72 mb-4 shadow-xl rounded-xl overflow-hidden">
+              {% if product.image %}
+                <img src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-75 group-hover:contrast-125"
+                    loading="lazy"
+                    decoding="async"
+                    onclick="openProductPopup('{{ product.name }}')"
+                    onerror="this.src='{% static 'images/placeholder-product.png' %}'">
+              {% else %}
+                <img src="{% static 'images/placeholder-product.png' %}"
+                    alt="{{ product.name }}"
+                    class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-75 group-hover:contrast-125"
+                    onclick="openProductPopup('{{ product.name }}')">
+              {% endif %}
+
+              <!-- Hover Name Overlay -->
+              <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-indigo-500/70 text-white font-semibold text-lg rounded-xl transition-opacity duration-300 shadow-lg">
+                {{ product.name }}
+              </span>
+            </div>
+
+            <h5 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 hover:text-indigo-600 transition-colors text-center">
+              {{ product.name }} <i class="fa-solid fa-cube"></i>
+            </h5>
+
+            <p class="text-sm sm:text-base text-gray-600 mb-4 text-center">
+              Company: <span class="font-medium">{{ product.brand.name }}</span> <i class="fa-solid fa-trademark"></i>
+            </p>
+
+            <div class="mt-auto">
+              <a href="{% url 'product_detail' product.id %}"
+                class="inline-block w-full text-center px-5 py-3 rounded-lg font-medium bg-indigo-600 text-white transition duration-300 ease-out hover:bg-indigo-700 hover:-translate-y-0.5 hover:shadow-lg">
+                View Details <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-gray-500 italic animate-fade-in">No featured products available.</p>
+    {% endif %}
+  </section>
+
+  <!-- Product Popup Modal -->
+  <div id="productPopupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-lg p-8 w-11/12 max-w-md text-center relative">
+      <button class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold" onclick="closeProductPopup()">&times;</button>
+      <h2 id="productPopupText" class="text-2xl font-bold text-indigo-600"></h2>
+    </div>
+  </div>
+
+
+<!-- Scroll Animations -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove("opacity-0", "scale-90", "translate-y-10");
+        entry.target.classList.add("opacity-100", "scale-100", "translate-y-0");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".brand-card, .product-card, .service-card, .animate-ready-stock").forEach(el => observer.observe(el));
+});
+</script>
+
+<!-- Animations -->
+<style>
+@layer utilities {
+  .animate-hero { animation: heroFade 1s ease-out forwards; }
+  .animate-hero-img { animation: heroImgFade 1s ease-out forwards; }
+
+  .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+  .animate-brand { animation: brandFade 0.8s ease-out forwards; }
+  .animate-product { animation: productFade 0.8s ease-out forwards; }
+  .animate-ready-stock { animation: readyFade 0.8s ease-out forwards; }
+
+  @keyframes heroFade {
+    0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes heroImgFade {
+    0% { opacity: 0; transform: translateY(-10px) scale(0.97); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes brandFade {
+    0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  @keyframes productFade {
+    0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes readyFade {
+    0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+    50% { transform: translateY(-5px) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+</style>
+
+<!-- Tailwind Animations -->
+<style>
+@layer utilities {
+  .animate-ready-stock { 
+    animation: readyFade 0.8s ease-out forwards; 
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+
+  @keyframes readyFade {
+    0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+    50% { transform: translateY(-5px) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+</style>
+
+<!-- Scroll Animations -->
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".brand-card");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("opacity-0", "scale-90");
+          entry.target.classList.add("opacity-100", "scale-100");
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(card => observer.observe(card));
+  });
+  </script>
+
+  <!-- Animations & Hover -->
+  <style>
+  @layer utilities {
+    .animate-fade-in { animation: fadeIn 1s ease-out both; }
+    .animate-brand { animation: fadeInUp 0.8s ease-out both; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  .brand-card img {
+    transition: transform 0.5s, filter 0.5s;
+  }
+
+  .brand-card span {
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  </style>
+
+<style>
+.stock-img {
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+.stock-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+  border-color: #6366F1;
+}
+.stock-card:hover h1 {
+  color: #4338CA;
+  transform: scale(1.05);
+}
+</style>
+{% endblock %}

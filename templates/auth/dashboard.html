@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Google Fonts & Font Awesome (in your base.html ideally) -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+
+  <!-- Greeting + Quick Actions -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
+    <div class="space-y-2">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 flex items-center gap-2">
+        <span class="inline-block animate-fade-in">Welcome back,</span>
+        <span class="text-indigo-600 animate-fade-in delay-100">{{ request.user.first_name|default:request.user.username }}</span>
+        <span class="text-gray-500 text-xl ml-1">👷‍♂️</span>
+      </h1>
+      <p class="text-gray-600 sm:text-lg">Your industrial dashboard: overview of orders, enquiries, and equipment.</p>
+    </div>
+    <div class="flex gap-3 flex-wrap">
+      <a href="{% url 'logout' %}" 
+         class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl shadow-xl hover:bg-red-700 transition-all duration-300">
+        Logout
+      </a>
+      <a href="{% url 'products' %}" 
+         class="inline-flex items-center gap-2 px-6 py-3 border border-indigo-600 text-indigo-600 font-semibold rounded-xl shadow-xl hover:bg-indigo-50 transition-all duration-300">
+        Browse Products
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats / Highlights -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <!-- Total Orders -->
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl p-6 flex items-center gap-4 transform hover:scale-105 transition-all duration-300 border-l-4 border-indigo-600">
+      <div class="bg-indigo-100 p-3 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v4H3V3zm0 6h12v4H3V9zm0 6h6v4H3v-4z" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 font-medium">Total Orders</div>
+        <div class="text-2xl font-bold text-gray-900">34</div>
+        <div class="text-xs text-gray-400 mt-1">Industrial equipment & machinery</div>
+      </div>
+    </div>
+
+    <!-- Successful Enquiries -->
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl p-6 flex items-center gap-4 transform hover:scale-105 transition-all duration-300 border-l-4 border-green-600">
+      <div class="bg-green-100 p-3 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 font-medium">Successful Enquiries</div>
+        <div class="text-2xl font-bold text-gray-900">12</div>
+        <div class="text-xs text-gray-400 mt-1">Industrial motors & panels</div>
+      </div>
+    </div>
+
+    <!-- Pending Requests -->
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl p-6 flex items-center gap-4 transform hover:scale-105 transition-all duration-300 border-l-4 border-yellow-500">
+      <div class="bg-yellow-100 p-3 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v4h4v-4c0-1.1-.9-2-2-2z" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 font-medium">Pending Requests</div>
+        <div class="text-2xl font-bold text-gray-900">3</div>
+        <div class="text-xs text-gray-400 mt-1">Awaiting approval for equipment orders</div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl p-6 flex items-center gap-4 transform hover:scale-105 transition-all duration-300 border-l-4 border-pink-500">
+      <div class="bg-pink-100 p-3 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 font-medium">Quick Links</div>
+        <div class="text-2xl font-bold text-gray-900">5</div>
+        <div class="text-xs text-gray-400 mt-1">Access all industrial tools & resources</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-2xl p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl sm:text-2xl font-semibold text-gray-900">Recent Activity</h2>
+        <a href="#" class="text-indigo-600 text-sm sm:text-base hover:underline">See all</a>
+      </div>
+      <ul class="space-y-4">
+        <li class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <div class="h-10 w-10 bg-indigo-50 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="text-xs sm:text-sm text-gray-400">2 hours ago</div>
+            <div class="text-gray-800 sm:text-base">You viewed product <strong>High Voltage Contactor</strong>.</div>
+          </div>
+        </li>
+        <li class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <div class="h-10 w-10 bg-green-50 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="text-xs sm:text-sm text-gray-400">1 day ago</div>
+            <div class="text-gray-800 sm:text-base">New enquiry submitted for <strong>Motor Starter Panel</strong>.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Shortcut Cards -->
+    <div class="space-y-6">
+      <div class="bg-white rounded-2xl shadow-2xl p-6 flex items-center gap-4 hover:shadow-3xl transition transform hover:-translate-y-1 duration-300">
+        <div class="p-3 bg-indigo-100 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m2 0a2 2 0 100-4H7a2 2 0 100 4h10zm0 0v4a2 2 0 11-4 0v-4m4 0h2" />
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-medium text-gray-900">Add New Product</div>
+          <a href="{% url 'products' %}" class="text-indigo-600 text-sm hover:underline">Go</a>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-2xl p-6 flex items-center gap-4 hover:shadow-3xl transition transform hover:-translate-y-1 duration-300">
+        <div class="p-3 bg-green-100 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-medium text-gray-900">View Brands</div>
+          <a href="{% url 'brands' %}" class="text-indigo-600 text-sm hover:underline">Explore</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Animations -->
+<style>
+  @layer utilities {
+    .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+    .animate-fade-down { animation: fadeDown 0.7s ease-out forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+{% endblock %}

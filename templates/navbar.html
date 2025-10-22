@@ -1,0 +1,151 @@
+{% load static %}
+<nav class="bg-white shadow-md animate-nav-fade-down fixed top-0 w-full z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <div class="flex-shrink-0 flex items-center space-x-2">
+        <a href="{% url 'home' %}" class="flex items-center group">
+          <img src="{% static 'images/logo_AA.png' %}" alt="Logo"
+               class="rounded-full h-12 w-12 object-cover transform group-hover:scale-105 transition duration-300" />
+          <span class="ml-1 text-xl font-extrabold text-indigo-600 group-hover:text-indigo-700 transition">
+            A A Enterprises
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop links with margin from logo -->
+      <div class="hidden md:flex space-x-6 items-center ml-[80px]">
+        <a href="{% url 'home' %}" class="relative px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'home' %}text-indigo-600 bg-indigo-50{% else %}text-gray-700 hover:text-indigo-600 hover:bg-gray-50{% endif %} group hover:underline underline-offset-4">Home</a>
+        <a href="/about/" class="relative px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group hover:underline underline-offset-4">About</a>
+        <a href="/products/" class="relative px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group hover:underline underline-offset-4">Products</a>
+        <a href="/brands/" class="relative px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group hover:underline underline-offset-4">Companies</a>
+        <a href="/contact/" class="relative px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group hover:underline underline-offset-4">Contact</a>
+        <a href="{% url 'dashboard' %}" class="relative px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'dashboard' %}text-indigo-600 bg-indigo-50{% else %}text-gray-700 hover:text-indigo-600 hover:bg-gray-50{% endif %} group hover:underline underline-offset-4">Dashboard</a>
+        <!-- <a href="{% url 'register' %}" class="relative px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'register' %}text-indigo-600 bg-indigo-50{% else %}text-gray-700 hover:text-indigo-600 hover:bg-gray-50{% endif %} group hover:underline underline-offset-4">Register</a> -->
+
+        {% if request.user.is_authenticated %}
+        <!-- Profile dropdown -->
+        <div class="relative group">
+          <button class="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none">
+            <img src="{% if request.user.profile.image %}{{ request.user.profile.image.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile" class="h-9 w-9 rounded-full object-cover border border-gray-300" />
+            <span class="font-medium">{{ request.user.username }}</span>
+            <svg class="w-4 h-4 ml-1 text-gray-600 group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="absolute left-0 z-10 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg hidden group-hover:block transition duration-300 ease-in-out">
+            <a href="{% url 'profile' %}" 
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:underline underline-offset-4 hover:text-base transition duration-200 ease-in-out">
+              Update Profile
+            </a>
+            <a href="{% url 'password_change' %}" 
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:underline underline-offset-4 hover:text-base transition duration-200 ease-in-out">
+              Change Password
+            </a>
+            <a href="{% url 'logout' %}" 
+              class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:underline underline-offset-4 hover:text-base transition duration-200 ease-in-out">
+              Logout
+            </a>
+          </div>
+
+        </div>
+        {% else %}
+        <a href="{% url 'login' %}" class="relative px-3 py-2 rounded-lg font-medium {% if request.resolver_match.url_name == 'login' %}text-indigo-600 bg-indigo-50{% else %}text-gray-700 hover:text-indigo-600 hover:bg-gray-50{% endif %} group hover:underline underline-offset-4">Login</a>
+        {% endif %}
+      </div>
+
+      <!-- Mobile Toggle -->
+      <div class="md:hidden">
+        <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false"
+                class="p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+          <svg id="icon-open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden border-t bg-white shadow-inner">
+    <div class="px-4 pt-2 pb-4 space-y-2">
+      <a href="{% url 'home' %}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Home</a>
+      <a href="/about/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">About</a>
+      <a href="/products/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Products</a>
+      <a href="/brands/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Companies</a>
+      <a href="/contact/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Contact</a>
+      
+      <a href="{% url 'dashboard' %}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Dashboard</a>
+      <!-- <a href="{% url 'register' %}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Register</a> -->
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="block px-3 py-2 text-base text-gray-700 hover:bg-gray-100">Update Profile</a>
+      <a href="{% url 'password_change' %}" class="block px-3 py-2 text-base text-gray-700 hover:bg-gray-100">Change Password</a>
+      <a href="{% url 'logout' %}" class="block px-3 py-2 text-base text-red-600 hover:bg-red-50">Logout</a>
+      {% else %}
+      <a href="{% url 'login' %}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 hover:underline underline-offset-4">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Push content below navbar -->
+<div class="h-16 md:h-16"></div>
+
+<!-- Image Slider Section -->
+<div class="relative w-full overflow-hidden mt-1">
+  <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+    <img src="{% static 'images/light_autom.jpg' %}" alt="Automation"
+         class="min-w-full h-[220px] sm:h-[450px] object-cover" />
+    <img src="{% static 'images/light_panel.jpg' %}" alt="Panel Installation"
+         class="min-w-full h-[220px] sm:h-[450px] object-cover" />
+    <img src="{% static 'images/light_amf.jpg' %}" alt="AMF Control"
+         class="min-w-full h-[220px] sm:h-[450px] object-cover" />
+    <img src="{% static 'images/light_contt.jpg' %}" alt="Control"
+         class="min-w-full h-[220px] sm:h-[450px] object-cover" />
+    <img src="{% static 'images/light_controller.jpg' %}" alt="Controller"
+         class="min-w-full h-[220px] sm:h-[450px] object-cover" />
+  </div>
+</div>
+
+<style>
+.animate-nav-fade-down {
+  animation: navFadeDown 0.5s ease-out;
+}
+@keyframes navFadeDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+#slider img {
+  transition: transform 0.4s ease-in-out;
+}
+#slider img:hover {
+  transform: scale(1.02);
+}
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    menu.classList.toggle('hidden');
+    iconOpen.classList.toggle('hidden');
+    iconClose.classList.toggle('hidden');
+  });
+  const slider = document.getElementById('slider');
+  const totalSlides = slider.children.length;
+  let index = 0;
+  setInterval(() => {
+    index = (index + 1) % totalSlides;
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }, 4000);
+</script>

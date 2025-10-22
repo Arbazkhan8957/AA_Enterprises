@@ -1,0 +1,19 @@
+/* static/css/style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+
+footer {
+    margin-top: 50px;
+}
